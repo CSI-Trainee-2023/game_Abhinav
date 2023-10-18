@@ -6,38 +6,38 @@ let board;
 let boardWidth = tileSize * columns; 
 let boardHeight = tileSize * rows; 
 let context;
-let shipWidth = tileSize*2;
-let shipHeight = tileSize;
-let shipX = tileSize * columns/2 - tileSize;
-let shipY = tileSize * rows - tileSize*1;
+let playerWidth = tileSize*2;
+let playerHeight = tileSize;
+let playerX = tileSize * columns/2 - tileSize;
+let playerY = tileSize * rows - tileSize*1;
 
 let shoota = document.getElementById("shootaudio");
 let enemya = document.getElementById("enemyaudio");
 
-let ship = {
-    x : shipX,
-    y : shipY,
-    width : shipWidth,
-    height : shipHeight
+let player = {
+    x : playerX,
+    y : playerY,
+    width : playerWidth,
+    height : playerHeight
 }
 
-let alienArray = [];
-let alienWidth = tileSize*2;
-let alienHeight = tileSize;
-let alienX = tileSize;
-let alienY = tileSize;
-let alienImg;
+let enemyArray = [];
+let enemyWidth = tileSize*2;
+let enemyHeight = tileSize;
+let enemyX = tileSize;
+let enemyY = tileSize;
+let enemyImg;
 
-let alienRows = 3;
-let alienColumns = 3;
-let alienCount = 0;
-let alienVelocityX = 2;
+let enemyRows = 3;
+let enemyColumns = 3;
+let enemyCount = 0;
+let enemyVelocityX = 2;
 
 let bulletArray=[];
 let bulletVelocityY = -10;
 
-let shipImg;
-let shipVelocityX = tileSize; 
+let playerImg;
+let playerVelocityX = tileSize; git
 
 let score=0;
 let game="Game Over !"
@@ -49,19 +49,19 @@ window.onload = function() {
     board.height = boardHeight;
     context = board.getContext("2d");
 
-    shipImg = new Image()
-    shipImg.src = "./player.png";
-    shipImg.onload = function() {
-        context.drawImage(shipImg,ship.x,ship.y,ship.width,ship.height);
+    playerImg = new Image()
+    playerImg.src = "./player.png";
+    playerImg.onload = function() {
+        context.drawImage(playerImg,player.x,player.y,player.width,player.height);
     }
 
     
-    alienImg = new Image();
-    alienImg.src = "./enemy1.png";
-    createAliens();
+    enemyImg = new Image();
+    enemyImg.src = "./enemy1.png";
+    createenemys();
 
     requestAnimationFrame(update);
-    document.addEventListener("keydown",moveship);
+    document.addEventListener("keydown",moveplayer);
     document.addEventListener("keyup",shoot);
 
 
@@ -74,25 +74,25 @@ function update()
         return;
     }
     context.clearRect(0,0,board.width,board.height);
-    //ship
-    context.drawImage(shipImg,ship.x,ship.y,ship.width,ship.height);
+    //player
+    context.drawImage(playerImg,player.x,player.y,player.width,player.height);
     //alein
-    for(let i=0;i<alienArray.length;i++)
+    for(let i=0;i<enemyArray.length;i++)
     {
-        let alien = alienArray[i];
-        if(alien.alive)
+        let enemy = enemyArray[i];
+        if(enemy.alive)
         {
-            alien.x +=alienVelocityX;
-            if (alien.x + alien.width >= board.width || alien.x <= 0) {
-                alienVelocityX *= -1;
-                alien.x += alienVelocityX*2;
-                for (let j = 0; j < alienArray.length; j++) {
-                    alienArray[j].y += alienHeight;
+            enemy.x +=enemyVelocityX;
+            if (enemy.x + enemy.width >= board.width || enemy.x <= 0) {
+                enemyVelocityX *= -1;
+                enemy.x += enemyVelocityX*2;
+                for (let j = 0; j < enemyArray.length; j++) {
+                    enemyArray[j].y += enemyHeight;
                 }
             }
-        context.drawImage(alienImg,alien.x,alien.y,alien.width,alien.height);
+        context.drawImage(enemyImg,enemy.x,enemy.y,enemy.width,enemy.height);
 
-        if(alien.y >= ship.y)
+        if(enemy.y >= player.y)
         {
             gameOver=true;
             context.fillStyle="red";
@@ -108,13 +108,13 @@ function update()
         context.fillStyle="White";
         context.fillRect(bullet.x,bullet.y,bullet.width,bullet.height);
 
-        for(let j=0;j<alienArray.length;j++)
+        for(let j=0;j<enemyArray.length;j++)
         {
-             let alein=alienArray[j];
+             let alein=enemyArray[j];
              if(!bullet.used && alein.alive && collide(bullet,alein)){
                 bullet.used=true;
                 alein.alive=false;
-                alienCount--;
+                enemyCount--;
                 score +=100;
                 enemyaudio();
              }
@@ -124,47 +124,47 @@ function update()
         bulletArray.shift();
     }
 
-        if (alienCount == 0) {
-            alienColumns = Math.min(alienColumns + 1, columns/2 -2); 
-            alienRows = Math.min(alienRows + 1, rows-4); 
-            alienVelocityX += 0.4 
-            alienArray = [];
+        if (enemyCount == 0) {
+            enemyColumns = Math.min(enemyColumns + 1, columns/2 -2); 
+            enemyRows = Math.min(enemyRows + 1, rows-4); 
+            enemyVelocityX += 0.4 
+            enemyArray = [];
             bulletArray = [];
-            createAliens();
+            createenemys();
         }
         context.fillStyle="red";
         context.font="20px calibri";
         context.fillText(score,5,20);
 
 }
-function moveship(e) {
+function moveplayer(e) {
     if(gameOver)
     {
         return;
     }
- if(e.code == "ArrowLeft" && ship.x - shipVelocityX >=0){
-    ship.x -= shipVelocityX;
+ if(e.code == "ArrowLeft" && player.x - playerVelocityX >=0){
+    player.x -= playerVelocityX;
  }
- else if(e.code == "ArrowRight" && ship.x + shipVelocityX + ship.width <= board.width)
+ else if(e.code == "ArrowRight" && player.x + playerVelocityX + player.width <= board.width)
  {
-    ship.x += shipVelocityX; 
+    player.x += playerVelocityX; 
 }
 }
-function createAliens() {
-    for (let c = 0; c < alienColumns; c++) {
-        for (let r = 0; r < alienRows; r++) {
-            let alien = {
-                img : alienImg,
-                x : alienX + c*alienWidth,
-                y : alienY + r*alienHeight,
-                width : alienWidth,
-                height : alienHeight,
+function createenemys() {
+    for (let c = 0; c < enemyColumns; c++) {
+        for (let r = 0; r < enemyRows; r++) {
+            let enemy = {
+                img : enemyImg,
+                x : enemyX + c*enemyWidth,
+                y : enemyY + r*enemyHeight,
+                width : enemyWidth,
+                height : enemyHeight,
                 alive : true
             }
-            alienArray.push(alien);
+            enemyArray.push(enemy);
         }
     }
-    alienCount = alienArray.length;
+    enemyCount = enemyArray.length;
 }
 
 function shoot(e)
@@ -177,8 +177,8 @@ function shoot(e)
     if (e.code == "Space") {
         //shoot
         let bullet = {
-            x : ship.x + shipWidth*15/32,
-            y : ship.y,
+            x : player.x + playerWidth*15/32,
+            y : player.y,
             width : tileSize/8,
             height : tileSize/2,
             used : false
