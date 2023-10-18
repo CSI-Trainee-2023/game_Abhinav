@@ -4,14 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Invader</title>
-    <link rel="stylesheet" href="style.css">
 </head>
+<style>
+    body{
+        background-image: url(background2.png);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    h1{
+        font-size: 50px;
+        color: white;
+        background-color: black;
+        padding: 10px 20px;
+    }
+    .startbutton{
+        text-align: center;
+        background-color: lightblue;
+        padding: 15px 32px;
+        display: inline-block;
+        font-weight: bolder;
+        border-radius: 5px;
+        border: none;
+        font-size: 20px;
+        align-items: center;
+    }
+    .container{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 90vh;        
+    }
+</style>
 <body>
-
+    <div class="container">
     <h1>Space Invader</h1>
-    <audio id="shootAudio" src="./shootaudio.wav"></audio>
-    <audio id="enemyaudio" src="./enemyaudio.wav"></audio>
-    <canvas id="invader"></canvas>
-    <script src="script.js"></script>
+     <div >
+        <a href="home.html"><button class="startbutton">Start Button</button></a>
+     </div>
+     </div>
 </body>
 </html>

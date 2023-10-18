@@ -4,10 +4,17 @@ body{
     flex-direction: column;
     padding: 0px;
     margin: 0px;
+    background-color: black;
 }
 #invader {
     background-image: url(background2.png);
 }
 canvas{
-  box-shadow: black 20px 10px 50px;
+  box-shadow: rgb(73, 73, 73) 20px 20px 20px;
+}
+h1 {
+  color: white;
+}
+#space{
+  background-image: url(background2.png);
 }

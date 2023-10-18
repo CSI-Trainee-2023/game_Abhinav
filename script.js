@@ -95,7 +95,7 @@ function update()
         if(enemy.y >= player.y)
         {
             gameOver=true;
-            context.fillStyle="red";
+            context.fillStyle="white";
             context.font="60px calibri";
             context.fillText(game,230,250);
         }
@@ -132,7 +132,7 @@ function update()
             bulletArray = [];
             createenemys();
         }
-        context.fillStyle="red";
+        context.fillStyle="white";
         context.font="20px calibri";
         context.fillText(score,5,20);
 
