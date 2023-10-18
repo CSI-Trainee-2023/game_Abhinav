@@ -1,15 +1,15 @@
 
-let tileSize = 32;
+let marbleSize = 32;
 let rows = 16;
 let columns = 24;
-let board;
-let boardWidth = tileSize * columns; 
-let boardHeight = tileSize * rows; 
+let floor;
+let floorWidth = marbleSize * columns; 
+let floorHeight = marbleSize * rows; 
 let context;
-let playerWidth = tileSize*2;
-let playerHeight = tileSize;
-let playerX = tileSize * columns/2 - tileSize;
-let playerY = tileSize * rows - tileSize*1;
+let playerWidth = marbleSize*2;
+let playerHeight = marbleSize;
+let playerX = marbleSize * columns/2 - marbleSize;
+let playerY = marbleSize * rows - marbleSize*1;
 
 let shoota = document.getElementById("shootaudio");
 let enemya = document.getElementById("enemyaudio");
@@ -22,10 +22,10 @@ let player = {
 }
 
 let enemyArray = [];
-let enemyWidth = tileSize*2;
-let enemyHeight = tileSize;
-let enemyX = tileSize;
-let enemyY = tileSize;
+let enemyWidth = marbleSize*2;
+let enemyHeight = marbleSize;
+let enemyX = marbleSize;
+let enemyY = marbleSize;
 let enemyImg;
 
 let enemyRows = 3;
@@ -37,17 +37,17 @@ let bulletArray=[];
 let bulletVelocityY = -10;
 
 let playerImg;
-let playerVelocityX = tileSize; git
+let playerVelocityX = marbleSize; 
 
 let score=0;
 let game="Game Over !"
 let gameOver=false;
 
 window.onload = function() {
-    board = document.getElementById("invader");
-    board.width = boardWidth;
-    board.height = boardHeight;
-    context = board.getContext("2d");
+    floor = document.getElementById("invader");
+    floor.width = floorWidth;
+    floor.height = floorHeight;
+    context = floor.getContext("2d");
 
     playerImg = new Image()
     playerImg.src = "./player.png";
@@ -73,7 +73,7 @@ function update()
     {
         return;
     }
-    context.clearRect(0,0,board.width,board.height);
+    context.clearRect(0,0,floor.width,floor.height);
     //player
     context.drawImage(playerImg,player.x,player.y,player.width,player.height);
     //alein
@@ -83,7 +83,7 @@ function update()
         if(enemy.alive)
         {
             enemy.x +=enemyVelocityX;
-            if (enemy.x + enemy.width >= board.width || enemy.x <= 0) {
+            if (enemy.x + enemy.width >= floor.width || enemy.x <= 0) {
                 enemyVelocityX *= -1;
                 enemy.x += enemyVelocityX*2;
                 for (let j = 0; j < enemyArray.length; j++) {
@@ -145,7 +145,7 @@ function moveplayer(e) {
  if(e.code == "ArrowLeft" && player.x - playerVelocityX >=0){
     player.x -= playerVelocityX;
  }
- else if(e.code == "ArrowRight" && player.x + playerVelocityX + player.width <= board.width)
+ else if(e.code == "ArrowRight" && player.x + playerVelocityX + player.width <= floor.width)
  {
     player.x += playerVelocityX; 
 }
@@ -179,8 +179,8 @@ function shoot(e)
         let bullet = {
             x : player.x + playerWidth*15/32,
             y : player.y,
-            width : tileSize/8,
-            height : tileSize/2,
+            width : marbleSize/8,
+            height : marbleSize/2,
             used : false
         }
         bulletArray.push(bullet);
