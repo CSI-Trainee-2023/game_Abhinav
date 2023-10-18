@@ -50,14 +50,14 @@ window.onload = function() {
     context = floor.getContext("2d");
 
     playerImg = new Image()
-    playerImg.src = "./player.png";
+    playerImg.src = "Player.png";
     playerImg.onload = function() {
         context.drawImage(playerImg,player.x,player.y,player.width,player.height);
     }
 
     
     enemyImg = new Image();
-    enemyImg.src = "./enemy1.png";
+    enemyImg.src = "enemy1.png";
     createenemys();
 
     requestAnimationFrame(update);
@@ -98,6 +98,7 @@ function update()
             context.fillStyle="white";
             context.font="60px calibri";
             context.fillText(game,230,250);
+            enemyaudio();
         }
         }
     }
