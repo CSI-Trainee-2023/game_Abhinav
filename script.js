@@ -2,17 +2,17 @@
 let tileSize = 32;
 let rows = 16;
 let columns = 24;
-
 let board;
 let boardWidth = tileSize * columns; 
 let boardHeight = tileSize * rows; 
 let context;
-
-
 let shipWidth = tileSize*2;
 let shipHeight = tileSize;
 let shipX = tileSize * columns/2 - tileSize;
 let shipY = tileSize * rows - tileSize*1;
+
+let shoota = document.getElementById("shootaudio");
+let enemya = document.getElementById("enemyaudio");
 
 let ship = {
     x : shipX,
@@ -28,10 +28,10 @@ let alienX = tileSize;
 let alienY = tileSize;
 let alienImg;
 
-let alienRows = 2;
+let alienRows = 3;
 let alienColumns = 3;
 let alienCount = 0;
-let alienVelocityX = 1;
+let alienVelocityX = 2;
 
 let bulletArray=[];
 let bulletVelocityY = -10;
@@ -97,7 +97,7 @@ function update()
             gameOver=true;
             context.fillStyle="red";
             context.font="60px calibri";
-            context.fillText(game,300,250);
+            context.fillText(game,230,250);
         }
         }
     }
@@ -116,6 +116,7 @@ function update()
                 alein.alive=false;
                 alienCount--;
                 score +=100;
+                enemyaudio();
              }
         }
     }
@@ -124,15 +125,9 @@ function update()
     }
 
         if (alienCount == 0) {
-            score += alienColumns * alienRows * 100; 
             alienColumns = Math.min(alienColumns + 1, columns/2 -2); 
             alienRows = Math.min(alienRows + 1, rows-4); 
-            if (alienVelocityX > 0) {
-                alienVelocityX += 0.4 
-            }
-            else {
-                alienVelocityX -= 0.4; 
-            }
+            alienVelocityX += 0.4 
             alienArray = [];
             bulletArray = [];
             createAliens();
@@ -194,4 +189,13 @@ function shoot(e)
 
 function collide(a,b){
     return a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y;
+}
+function shootaudio(){
+    shoota.currentTime=0;
+    shoota.play();
+}
+function enemyaudio()
+{
+    enemya.currentTime=0;
+    enemya.play();
 }
