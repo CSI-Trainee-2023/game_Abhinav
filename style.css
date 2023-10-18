@@ -6,7 +6,7 @@ body{
     margin: 0px;
 }
 #invader {
-    background-image: url(background.png);
+    background-image: url(background2.png);
 }
 canvas{
   box-shadow: black 20px 10px 50px;
