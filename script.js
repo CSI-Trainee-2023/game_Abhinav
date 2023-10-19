@@ -11,6 +11,8 @@ let playerHeight = marbleSize;
 let playerX = marbleSize * columns/2 - marbleSize;
 let playerY = marbleSize * rows - marbleSize*1;
 
+
+
 let shoota = document.getElementById("shootaudio");
 let enemya = document.getElementById("enemyaudio");
 
@@ -31,7 +33,7 @@ let enemyImg;
 let enemyRows = 3;
 let enemyColumns = 3;
 let enemyCount = 0;
-let enemyVelocityX = 2;
+let enemyVelocityX = 3;
 
 let bulletArray=[];
 let bulletVelocityY = -10;
@@ -42,6 +44,9 @@ let playerVelocityX = marbleSize;
 let score=0;
 let game="Game Over !"
 let gameOver=false;
+let highscore=1850;
+let highscorep="High Score - "
+let scorep="Score - "
 
 window.onload = function() {
     floor = document.getElementById("invader");
@@ -116,11 +121,12 @@ function update()
                 bullet.used=true;
                 alein.alive=false;
                 enemyCount--;
-                score +=100;
+                score +=10;
                 enemyaudio();
              }
         }
     }
+    5
     while(bulletArray.length>0 && (bulletArray[0].used || bulletArray[0].y <0)){
         bulletArray.shift();
     }
@@ -128,14 +134,27 @@ function update()
         if (enemyCount == 0) {
             enemyColumns = Math.min(enemyColumns + 1, columns/2 -2); 
             enemyRows = Math.min(enemyRows + 1, rows-4); 
-            enemyVelocityX += 0.4 
+            enemyVelocityX += 0.8 
             enemyArray = [];
             bulletArray = [];
             createenemys();
         }
+
         context.fillStyle="white";
         context.font="20px calibri";
-        context.fillText(score,5,20);
+        context.fillText(scorep,5,25);
+
+        context.fillStyle="white";
+        context.font="20px calibri";
+        context.fillText(score,70,25);
+
+        context.fillStyle="white";
+        context.font="20px calibri";
+        context.fillText(highscorep,580,25);
+
+        context.fillStyle="white";
+        context.font="20px calibri";
+        context.fillText(highscore,680,25);
 
 }
 function moveplayer(e) {
